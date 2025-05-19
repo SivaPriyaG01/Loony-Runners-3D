@@ -164,6 +164,7 @@ GoogleService-Info.plist.meta
 Assets/StreamingAssets/google-services-desktop.json
 Assets/StreamingAssets/google-services-desktop.json.meta
 Assets/StreamingAssets.meta
+Assets/Photon/
 
 # 🚀 Added from .gitattributes to prevent tracking these files 🚀
 
