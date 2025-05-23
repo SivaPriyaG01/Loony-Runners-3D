@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
     private PlayerInput playerInput;
+    private CinemachineCamera followCamera;
 
     float vertical;
     float horizontal;
@@ -37,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
+        followCamera = GameObject.FindFirstObjectByType<CinemachineCamera>();
     }
 
     // Update is called once per frame
