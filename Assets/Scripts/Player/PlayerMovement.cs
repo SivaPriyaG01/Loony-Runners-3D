@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontal;
     bool jump;
 
-    private int playerSpeed;
+    private int playerSpeed=10;
     public int PlayerSpeed
     {
         get => playerSpeed;
@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private int jumpForce;
+    private int jumpForce=5;
     public int JumpForce
     {
         get => jumpForce;
@@ -56,15 +56,15 @@ public class PlayerMovement : MonoBehaviour
 
     void PlayerInput()
     {
-        vertical = playerInput.actions["Move"].ReadValue<Vector2>().x;
-        horizontal = playerInput.actions["Move"].ReadValue<Vector2>().y;
+        vertical = playerInput.actions["Move"].ReadValue<Vector2>().y;
+        horizontal = playerInput.actions["Move"].ReadValue<Vector2>().x;
         jump = playerInput.actions["Jump"].WasPressedThisFrame();
     }
 
     void MovePlayer()
     {
         Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
-        rb.MovePosition(moveDirection*playerSpeed);
+        rb.MovePosition(rb.position+(moveDirection*playerSpeed));
     }
 
     void JumpPlayer()
