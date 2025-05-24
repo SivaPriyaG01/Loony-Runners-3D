@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -64,11 +65,16 @@ public class PlayerMovement : MonoBehaviour
     void MovePlayer()
     {
         Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
-        rb.MovePosition(rb.position+(moveDirection*playerSpeed));
+        if (moveDirection != Vector3.zero)
+        {
+            rb.MovePosition(rb.position+(moveDirection*playerSpeed));
+        }
+        
     }
 
     void JumpPlayer()
     {
+        if(jump)
         rb.AddForce(Vector3.up*JumpForce, ForceMode.Impulse);
     }
 }
