@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontal;
     bool jump;
 
-    private int playerSpeed=10;
+    private int playerSpeed = 10;
     public int PlayerSpeed
     {
         get => playerSpeed;
@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private int jumpForce=5;
+    private int jumpForce = 5;
     public int JumpForce
     {
         get => jumpForce;
@@ -67,14 +67,23 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
         if (moveDirection != Vector3.zero)
         {
-            rb.MovePosition(rb.position+(moveDirection*playerSpeed));
+            rb.MovePosition(rb.position + (moveDirection * playerSpeed));
         }
-        
+
     }
 
     void JumpPlayer()
     {
-        if(jump)
-        rb.AddForce(Vector3.up*JumpForce, ForceMode.Impulse);
+        if (jump)
+            rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+    }
+
+    public void SetPlayerSpeed(int speed)
+    {
+        PlayerSpeed = speed;
+    }
+    public void SetPlayerJump(int jump)
+    {
+        JumpForce = jump;
     }
 }

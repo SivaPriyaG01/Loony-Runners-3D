@@ -11,6 +11,7 @@ public class CollisionDetector : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("SpeedPowerUp"))
         {
+            
             SpeedPowerUp?.Invoke();
         }
         else if (collision.gameObject.CompareTag("PowerJump"))
