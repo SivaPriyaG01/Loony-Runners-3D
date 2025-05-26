@@ -67,7 +67,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
         if (moveDirection != Vector3.zero)
         {
-            rb.MovePosition(rb.position + (moveDirection * playerSpeed));
+            //rb.MovePosition(rb.position + (moveDirection * playerSpeed));
+            rb.AddForce(moveDirection * playerSpeed, ForceMode.VelocityChange);
         }
 
     }
