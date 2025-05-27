@@ -17,6 +17,12 @@ public class ApplyPowerUp : MonoBehaviour
         collisionDetector.SpeedPowerUp -= BoostPlayerSpeed;
         collisionDetector.PowerJump -= BoostPlayerJump;
     }
+
+    void Awake()
+    {
+        collisionDetector=GetComponent<CollisionDetector>();
+        playerMovement = GetComponent<PlayerMovement>();
+    }
     public void BoostPlayerSpeed()
     {
         playerMovement.SetPlayerSpeed(speedPowerUpValue);
