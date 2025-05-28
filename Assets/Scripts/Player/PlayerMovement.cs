@@ -1,52 +1,40 @@
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     private Rigidbody rb;
     private PlayerInput playerInput;
-    private CinemachineCamera followCamera;
 
-    float vertical;
-    float horizontal;
-    bool jump;
+    private float vertical;
+    private float horizontal;
+    private bool jump;
 
-    private int playerSpeed = 10;
-    public int PlayerSpeed
+    [SerializeField] private float playerSpeed = 10f;
+    [SerializeField] private float jumpForce = 5f;
+
+    public float PlayerSpeed
     {
         get => playerSpeed;
-        set
-        {
-            playerSpeed += value;
-        }
+        set => playerSpeed = value;
     }
 
-    private int jumpForce = 5;
-    public int JumpForce
+    public float JumpForce
     {
         get => jumpForce;
-        set
-        {
-            jumpForce += value;
-        }
+        set => jumpForce = value;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-        followCamera = GameObject.FindFirstObjectByType<CinemachineCamera>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        PlayerInput();
+        ReadInput();
     }
 
     void FixedUpdate()
@@ -55,10 +43,11 @@ public class PlayerMovement : MonoBehaviour
         JumpPlayer();
     }
 
-    void PlayerInput()
+    void ReadInput()
     {
-        vertical = playerInput.actions["Move"].ReadValue<Vector2>().y;
-        horizontal = playerInput.actions["Move"].ReadValue<Vector2>().x;
+        Vector2 moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
+        vertical = moveInput.y;
+        horizontal = moveInput.x;
         jump = playerInput.actions["Jump"].WasPressedThisFrame();
     }
 
@@ -67,23 +56,24 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
         if (moveDirection != Vector3.zero)
         {
-            //rb.MovePosition(rb.position + (moveDirection * playerSpeed));
-            rb.AddForce(moveDirection * playerSpeed, ForceMode.VelocityChange);
+            rb.MovePosition(rb.position + moveDirection * playerSpeed * Time.fixedDeltaTime);
         }
-
     }
 
     void JumpPlayer()
     {
-        if (jump)
-            rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+        if (jump && Mathf.Abs(rb.linearVelocity.y) < 0.01f) // prevent double jumps
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 
-    public void SetPlayerSpeed(int speed)
+    public void SetPlayerSpeed(float speed)
     {
         PlayerSpeed = speed;
     }
-    public void SetPlayerJump(int jump)
+
+    public void SetPlayerJump(float jump)
     {
         JumpForce = jump;
     }
