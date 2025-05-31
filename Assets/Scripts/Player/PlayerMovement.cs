@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
+        playerInput.actions.Enable(); 
     }
 
     void Update()
@@ -49,15 +50,22 @@ public class PlayerMovement : MonoBehaviour
         vertical = moveInput.y;
         horizontal = moveInput.x;
         jump = playerInput.actions["Jump"].WasPressedThisFrame();
+        Debug.Log($"Move: {moveInput}, Jump: {jump}");
     }
 
     void MovePlayer()
     {
-        Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
-        if (moveDirection != Vector3.zero)
-        {
-            rb.MovePosition(rb.position + moveDirection * playerSpeed * Time.fixedDeltaTime);
-        }
+        // Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
+        // if (moveDirection != Vector3.zero)
+        // {
+        //     rb.MovePosition(rb.position + moveDirection * playerSpeed * Time.fixedDeltaTime);
+        // }
+
+        Vector3 moveDirection = transform.right * horizontal + transform.forward * vertical;
+        moveDirection.y = 0f; // prevent vertical movement
+        moveDirection.Normalize();
+
+        rb.MovePosition(rb.position + moveDirection * playerSpeed * Time.fixedDeltaTime);
     }
 
     void JumpPlayer()
