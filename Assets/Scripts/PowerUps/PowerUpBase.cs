@@ -2,15 +2,7 @@ using UnityEngine;
 
 public class PowerUpBase : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private int speedMultiplier = 2;
+    public int SpeedMultiplier
+    { get; private set; }
 }

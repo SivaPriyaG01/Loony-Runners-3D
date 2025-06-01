@@ -3,20 +3,21 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
-    public event Action SpeedPowerUp;
-    public event Action PowerJump;
+    public event Action<int> SpeedPowerUp;
+    public event Action<int> PowerJump;
     public event Action Obstacle;
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("SpeedPowerUp"))
         {
-            
-            SpeedPowerUp?.Invoke();
+            int speedMultiplier = collision.gameObject.GetComponent<SpeedPowerUp>().SpeedMultiplier;
+            SpeedPowerUp?.Invoke(speedMultiplier);
         }
-        else if (collision.gameObject.CompareTag("PowerJump"))
+        else if (collision.gameObject.CompareTag("JumpPowerUp"))
         {
-            PowerJump?.Invoke();
+            int jumpMultiplier = collision.gameObject.GetComponent<JumpPowerUp>().JumpMultiplier;
+            PowerJump?.Invoke(jumpMultiplier);
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
