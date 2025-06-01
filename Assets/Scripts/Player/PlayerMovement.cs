@@ -66,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         moveDirection.Normalize();
 
         rb.MovePosition(rb.position + moveDirection * playerSpeed * Time.fixedDeltaTime);
+        //rb.AddForce(moveDirection * playerSpeed, ForceMode.VelocityChange);
     }
 
     void JumpPlayer()
