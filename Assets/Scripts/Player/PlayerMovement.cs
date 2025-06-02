@@ -11,8 +11,11 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private bool jump;
 
-    [SerializeField] private float playerSpeed = 10f;
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float defaultSpeed = 10f;
+    [SerializeField] private float defaultJumpForce = 5f;
+    private float playerSpeed;
+    private float jumpForce;
+    
 
     public float PlayerSpeed
     {
@@ -36,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         ReadInput();
+        SetPlayerJump(defaultJumpForce);
+        SetPlayerSpeed(defaultSpeed);
     }
 
     void FixedUpdate()
@@ -55,18 +60,12 @@ public class PlayerMovement : MonoBehaviour
 
     void MovePlayer()
     {
-        // Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
-        // if (moveDirection != Vector3.zero)
-        // {
-        //     rb.MovePosition(rb.position + moveDirection * playerSpeed * Time.fixedDeltaTime);
-        // }
-
         Vector3 moveDirection = transform.right * horizontal + transform.forward * vertical;
         moveDirection.y = 0f; // prevent vertical movement
         moveDirection.Normalize();
 
         rb.MovePosition(rb.position + moveDirection * playerSpeed * Time.fixedDeltaTime);
-        //rb.AddForce(moveDirection * playerSpeed, ForceMode.VelocityChange);
+        
     }
 
     void JumpPlayer()
@@ -79,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetPlayerSpeed(float speed)
     {
-        PlayerSpeed = speed;
+        PlayerSpeed *= speed;
     }
 
     public void SetPlayerJump(float jump)
