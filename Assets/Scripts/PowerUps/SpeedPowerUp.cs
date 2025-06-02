@@ -9,6 +9,9 @@ public class SpeedPowerUp : PowerUpBase
         get
         { return speedMultiplier; }
 
-        set{}
+        set
+        {
+          speedMultiplier = value;
+        }
     }
 }
