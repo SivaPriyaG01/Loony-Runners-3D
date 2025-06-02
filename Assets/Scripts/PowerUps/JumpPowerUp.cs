@@ -6,5 +6,8 @@ public class JumpPowerUp : PowerUpBase
     public int JumpMultiplier
     { get
         { return jumpMultiplier; }
-      set{} }
+      set
+      {
+      jumpMultiplier = value;
+      } }
 }
