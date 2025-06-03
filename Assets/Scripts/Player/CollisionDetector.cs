@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CollisionDetector : MonoBehaviour
 {
-    public event Action<int,int> SpeedPowerUp;
-    public event Action<int,int> PowerJump;
+    public event Action<float,int> SpeedPowerUp;
+    public event Action<float,int> PowerJump;
     public event Action Obstacle;
 
 
@@ -14,7 +15,7 @@ public class CollisionDetector : MonoBehaviour
         {
             Debug.Log("Coollided with speed power up");
             var speedComponent = other.gameObject.GetComponent<SpeedPowerUp>();
-            int newSpeed = speedComponent.NewSpeed;
+            float newSpeed = speedComponent.NewSpeed;
             int speedTime = speedComponent.SpeedPowerUpTime;
             SpeedPowerUp?.Invoke(newSpeed,speedTime);
         }
@@ -22,7 +23,7 @@ public class CollisionDetector : MonoBehaviour
         {
             Debug.Log("Coollided with jump power up");
             var jumpComponent = other.gameObject.GetComponent<JumpPowerUp>();
-            int newJumpVal = jumpComponent.NewJumpValue;
+            float newJumpVal = jumpComponent.NewJumpValue;
             int jumpTime = jumpComponent.JumpPowerUpTime;
             PowerJump?.Invoke(newJumpVal,jumpTime);
         }

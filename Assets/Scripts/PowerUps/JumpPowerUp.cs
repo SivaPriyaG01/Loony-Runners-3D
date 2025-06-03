@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class JumpPowerUp : PowerUpBase
 {
+  public event Action<float, int> PowerJump;
   private float newJumpValue;
   public float NewJumpValue
   {
@@ -24,11 +26,15 @@ public class JumpPowerUp : PowerUpBase
       jumpPowerUpTime = value;
     }
   }
-  private float jumpmultiplier;
 
-  public float JumpMultiplier
+
+  void OnTriggerEnter(Collider other)
   {
-    get { return jumpmultiplier; }
-    set { jumpmultiplier = value; }
-  }
+    if (other.gameObject.CompareTag("Player"))
+    {
+      PowerJump?.Invoke(NewJumpValue,JumpPowerUpTime);
+      Destroy(gameObject);      
+    }
+    }
+
 }

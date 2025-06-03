@@ -27,11 +27,5 @@ public class SpeedPowerUp : PowerUpBase
     }
   }
 
-  private float multiplier;
-
-  public float Multiplier
-  {
-    get { return multiplier; }
-    set { multiplier = value; }
-  }
+  
 }

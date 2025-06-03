@@ -6,26 +6,30 @@ using UnityEngine;
 public class ApplyPowerUp : MonoBehaviour
 {
     CollisionDetector collisionDetector;
+    SpeedPowerUp speedPowerUp;
+    JumpPowerUp jumpPowerUp;
     PlayerMovement playerMovement;
 
     void Awake()
     {
         collisionDetector = GetComponent<CollisionDetector>();
         playerMovement = GetComponent<PlayerMovement>();
+        speedPowerUp = new SpeedPowerUp();
+        jumpPowerUp = new JumpPowerUp();
 
-        if (collisionDetector != null)
+        if (speedPowerUp && jumpPowerUp != null)
         {
-        collisionDetector.SpeedPowerUp += BoostPlayerSpeed;
-        collisionDetector.PowerJump += BoostPlayerJump;
+            speedPowerUp.SpeedPowerUpEvent += BoostPlayerSpeed;
+            jumpPowerUp.PowerJump += BoostPlayerJump;
         }
     }
 
     void OnDestroy()
     {
-        if (collisionDetector != null)
+        if (speedPowerUp && jumpPowerUp != null)
         {
-        collisionDetector.SpeedPowerUp -= BoostPlayerSpeed;
-        collisionDetector.PowerJump -= BoostPlayerJump;
+            speedPowerUp.SpeedPowerUpEvent -= BoostPlayerSpeed;
+            jumpPowerUp.PowerJump -= BoostPlayerJump;
         }
     }
 
