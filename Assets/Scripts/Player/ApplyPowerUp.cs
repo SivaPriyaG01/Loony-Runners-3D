@@ -7,46 +7,57 @@ public class ApplyPowerUp : MonoBehaviour
 {
     CollisionDetector collisionDetector;
     PlayerMovement playerMovement;
-    // int speedPowerUpValue;
-    // int jumpPowerUpValue;
-    void OnEnable()
-    {
-        collisionDetector.SpeedPowerUp += BoostPlayerSpeed;
-        collisionDetector.PowerJump += BoostPlayerJump;
-    }
-
-    void OnDisable()
-    {
-        collisionDetector.SpeedPowerUp -= BoostPlayerSpeed;
-        collisionDetector.PowerJump -= BoostPlayerJump;
-    }
 
     void Awake()
     {
         collisionDetector = GetComponent<CollisionDetector>();
         playerMovement = GetComponent<PlayerMovement>();
-    }
-    public void BoostPlayerSpeed(int value, int time)
-    {
-        ApplySpeedPowerUp(value, time);
-        playerMovement.SetPlayerSpeed(playerMovement.defaultSpeed);
-    }
-    public void BoostPlayerJump(int value, int time)
-    {
-        ApplyJumpPowerUp(value, time);
-        playerMovement.SetPlayerJump(playerMovement.defaultJumpForce);
+
+        if (collisionDetector != null)
+        {
+        collisionDetector.SpeedPowerUp += BoostPlayerSpeed;
+        collisionDetector.PowerJump += BoostPlayerJump;
+        }
     }
 
-    IEnumerator ApplySpeedPowerUp(int value, int time)
+    void OnDestroy()
     {
-        playerMovement.SetPlayerSpeed(value);
-        yield return new WaitForSecondsRealtime(time);
+        if (collisionDetector != null)
+        {
+        collisionDetector.SpeedPowerUp += BoostPlayerSpeed;
+        collisionDetector.PowerJump += BoostPlayerJump;
+        }
     }
-    
-    IEnumerator ApplyJumpPowerUp(int value, int time)
+
+    public void BoostPlayerSpeed(float value, int time)
+    {
+        StartCoroutine(ApplySpeedPowerUp(value, time));
+       
+        Debug.Log("Speed power Up ended");
+    }
+    public void BoostPlayerJump(float value, int time)
+    {
+        StartCoroutine(ApplyJumpPowerUp(value, time));
+        
+        Debug.Log("Jump power Up ended");
+    }
+
+    IEnumerator ApplySpeedPowerUp(float value, int time)
     {
         playerMovement.SetPlayerSpeed(value);
+        Debug.Log("Speed power Up applied");
         yield return new WaitForSecondsRealtime(time);
+
+         playerMovement.SetPlayerSpeed(playerMovement.defaultSpeed);
+    }
+
+    IEnumerator ApplyJumpPowerUp(float value, int time)
+    {
+        playerMovement.SetPlayerJump(value);
+        Debug.Log("Jump power Up applied");
+        yield return new WaitForSecondsRealtime(time);
+        
+        playerMovement.SetPlayerJump(playerMovement.defaultJumpForce);
     }
 
 }

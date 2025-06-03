@@ -3,19 +3,19 @@ using UnityEngine;
 public class SpeedPowerUp : PowerUpBase
 {
   // Start is called once before the first execution of Update after the MonoBehaviour is created
-  private int speedMultiplier = 2;
-  public int SpeedMultiplier
+  private float newSpeed;
+  public float NewSpeed
   {
     get
-    { return speedMultiplier; }
+    { return newSpeed; }
 
     set
     {
-      speedMultiplier = value;
+      newSpeed = value;
     }
   }
 
-  private int speedPowerUpTime = 5;
+  private int speedPowerUpTime;
 
   public int SpeedPowerUpTime
   {
@@ -26,4 +26,14 @@ public class SpeedPowerUp : PowerUpBase
       speedPowerUpTime = value;
     }
   }
+
+  PlayerMovement playerMovement;
+  private float multiplier = 1.5f;
+  void Awake()
+  {
+    playerMovement = GetComponent<PlayerMovement>();
+    NewSpeed = playerMovement.defaultSpeed * multiplier;
+    //Implement a script to assign time value
+  }
+
 }

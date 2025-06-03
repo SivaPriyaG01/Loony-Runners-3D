@@ -7,26 +7,31 @@ public class CollisionDetector : MonoBehaviour
     public event Action<int,int> PowerJump;
     public event Action Obstacle;
 
-    void OnCollisionEnter(Collision collision)
+
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("SpeedPowerUp"))
+        if (other.gameObject.CompareTag("SpeedPowerUp"))
         {
-            var speedComponent = collision.gameObject.GetComponent<SpeedPowerUp>();
-            int speedMultiplier = speedComponent.SpeedMultiplier;
+            Debug.Log("Coollided with speed power up");
+            var speedComponent = other.gameObject.GetComponent<SpeedPowerUp>();
+            int newSpeed = speedComponent.NewSpeed;
             int speedTime = speedComponent.SpeedPowerUpTime;
-            SpeedPowerUp?.Invoke(speedMultiplier,speedTime);
+            SpeedPowerUp?.Invoke(newSpeed,speedTime);
         }
-        else if (collision.gameObject.CompareTag("JumpPowerUp"))
+        else if (other.gameObject.CompareTag("JumpPowerUp"))
         {
-            var jumpComponent = collision.gameObject.GetComponent<JumpPowerUp>();
-            int jumpMultiplier = jumpComponent.JumpMultiplier;
+            Debug.Log("Coollided with jump power up");
+            var jumpComponent = other.gameObject.GetComponent<JumpPowerUp>();
+            int newJumpVal = jumpComponent.NewJumpValue;
             int jumpTime = jumpComponent.JumpPowerUpTime;
-            PowerJump?.Invoke(jumpMultiplier,jumpTime);
+            PowerJump?.Invoke(newJumpVal,jumpTime);
         }
-        else if (collision.gameObject.CompareTag("Obstacle"))
+        else if (other.gameObject.CompareTag("Obstacle"))
         {
             Obstacle?.Invoke();
         }
 
     }
+
+    
 }

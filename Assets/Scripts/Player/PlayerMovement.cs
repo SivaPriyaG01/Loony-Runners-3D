@@ -11,8 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private bool jump;
 
-    [SerializeField] private float defaultSpeed = 10f;
-    [SerializeField] private float defaultJumpForce = 5f;
+     public float defaultSpeed = 10f;
+     public float defaultJumpForce = 5f;
     private float playerSpeed;
     private float jumpForce;
     
@@ -34,13 +34,13 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
         playerInput.actions.Enable(); 
+        SetPlayerJump(defaultJumpForce);
+        SetPlayerSpeed(defaultSpeed);
     }
 
     void Update()
     {
         ReadInput();
-        SetPlayerJump(defaultJumpForce);
-        SetPlayerSpeed(defaultSpeed);
     }
 
     void FixedUpdate()
@@ -55,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
         vertical = moveInput.y;
         horizontal = moveInput.x;
         jump = playerInput.actions["Jump"].WasPressedThisFrame();
-        Debug.Log($"Move: {moveInput}, Jump: {jump}");
     }
 
     void MovePlayer()
@@ -78,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetPlayerSpeed(float speed)
     {
-        PlayerSpeed *= speed;
+        PlayerSpeed = speed;
     }
 
     public void SetPlayerJump(float jump)
