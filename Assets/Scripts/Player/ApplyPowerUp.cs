@@ -24,8 +24,8 @@ public class ApplyPowerUp : MonoBehaviour
     {
         if (collisionDetector != null)
         {
-        collisionDetector.SpeedPowerUp += BoostPlayerSpeed;
-        collisionDetector.PowerJump += BoostPlayerJump;
+        collisionDetector.SpeedPowerUp -= BoostPlayerSpeed;
+        collisionDetector.PowerJump -= BoostPlayerJump;
         }
     }
 

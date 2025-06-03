@@ -27,13 +27,11 @@ public class SpeedPowerUp : PowerUpBase
     }
   }
 
-  PlayerMovement playerMovement;
-  private float multiplier = 1.5f;
-  void Awake()
-  {
-    playerMovement = GetComponent<PlayerMovement>();
-    NewSpeed = playerMovement.defaultSpeed * multiplier;
-    //Implement a script to assign time value
-  }
+  private float multiplier;
 
+  public float Multiplier
+  {
+    get { return multiplier; }
+    set { multiplier = value; }
+  }
 }

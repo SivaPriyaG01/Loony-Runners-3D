@@ -24,13 +24,11 @@ public class JumpPowerUp : PowerUpBase
       jumpPowerUpTime = value;
     }
   }
+  private float jumpmultiplier;
 
-  PlayerMovement playerMovement;
-  private float multiplier = 1.5f;
-
-  void Awake()
+  public float JumpMultiplier
   {
-    NewJumpValue = playerMovement.defaultJumpForce * multiplier;
-    //Implement a script to assign time value
+    get { return jumpmultiplier; }
+    set { jumpmultiplier = value; }
   }
 }

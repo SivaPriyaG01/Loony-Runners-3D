@@ -6,17 +6,27 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
     private PlayerInput playerInput;
+    
 
     private float vertical;
     private float horizontal;
     private bool jump;
 
-     public float defaultSpeed = 10f;
-     public float defaultJumpForce = 5f;
+    public float defaultSpeed = 10f;
+    public float defaultJumpForce = 5f;
     private float playerSpeed;
     private float jumpForce;
-    
 
+    public float DefaultSpeed
+    {
+        get => defaultSpeed;
+        set => defaultSpeed = value;
+    }
+    public float DefaultJumpForce
+    {
+        get => defaultJumpForce;
+        set => defaultJumpForce = value;
+    }
     public float PlayerSpeed
     {
         get => playerSpeed;
@@ -33,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-        playerInput.actions.Enable(); 
+        playerInput.actions.Enable();
         SetPlayerJump(defaultJumpForce);
         SetPlayerSpeed(defaultSpeed);
     }
@@ -64,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
         moveDirection.Normalize();
 
         rb.MovePosition(rb.position + moveDirection * playerSpeed * Time.fixedDeltaTime);
-        
+
     }
 
     void JumpPlayer()
@@ -84,4 +94,6 @@ public class PlayerMovement : MonoBehaviour
     {
         JumpForce = jump;
     }
+    
+
 }
