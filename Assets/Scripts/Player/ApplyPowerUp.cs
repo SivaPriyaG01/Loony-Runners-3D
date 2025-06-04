@@ -6,32 +6,53 @@ using UnityEngine;
 public class ApplyPowerUp : MonoBehaviour
 {
     CollisionDetector collisionDetector;
-    SpeedPowerUp speedPowerUp;
-    JumpPowerUp jumpPowerUp;
+    // SpeedPowerUp speedPowerUp;
+    // JumpPowerUp jumpPowerUp;
     PlayerMovement playerMovement;
+
+    // public event Action<float,int> SpeedPowerUpEvent;
+    // public event Action<float, int> PowerJump;
+
+    void OnEnable()
+    {
+        SpeedPowerUp.SpeedPowerUpEvent += BoostPlayerSpeed;
+        JumpPowerUp.PowerJump += BoostPlayerJump;
+    }
+
+    void OnDisable()
+    {
+         SpeedPowerUp.SpeedPowerUpEvent -= BoostPlayerSpeed;
+        JumpPowerUp.PowerJump -= BoostPlayerJump;
+    }
 
     void Awake()
     {
         collisionDetector = GetComponent<CollisionDetector>();
         playerMovement = GetComponent<PlayerMovement>();
-        speedPowerUp = new SpeedPowerUp();
-        jumpPowerUp = new JumpPowerUp();
+        // speedPowerUp = new SpeedPowerUp();
+        // jumpPowerUp = new JumpPowerUp();
 
-        if (speedPowerUp!= null && jumpPowerUp != null)
-        {
-            speedPowerUp.SpeedPowerUpEvent += BoostPlayerSpeed;
-            jumpPowerUp.PowerJump += BoostPlayerJump;
-        }
+        // if (speedPowerUp != null && jumpPowerUp != null)
+        // {
+        //     // speedPowerUp.SpeedPowerUpEvent += BoostPlayerSpeed;
+        //     // jumpPowerUp.PowerJump += BoostPlayerJump;
+        // }
+
+        // SpeedPowerUpEvent += BoostPlayerSpeed;
+        // PowerJump += BoostPlayerJump;
     }
 
-    void OnDestroy()
-    {
-        if (speedPowerUp!= null && jumpPowerUp != null)
-        {
-            speedPowerUp.SpeedPowerUpEvent -= BoostPlayerSpeed;
-            jumpPowerUp.PowerJump -= BoostPlayerJump;
-        }
-    }
+    // void OnDestroy()
+    // {
+    //     // if (speedPowerUp!= null && jumpPowerUp != null)
+    //     // {
+    //     //     speedPowerUp.SpeedPowerUpEvent -= BoostPlayerSpeed;
+    //     //     jumpPowerUp.PowerJump -= BoostPlayerJump;
+    //     // }
+
+    //     SpeedPowerUpEvent -= BoostPlayerSpeed;
+    //     PowerJump -= BoostPlayerJump;
+    // }
 
     public void BoostPlayerSpeed(float value, int time)
     {
