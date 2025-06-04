@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
+//using Unity.VisualScripting;
 using UnityEngine;
 
 public class ApplyPowerUp : MonoBehaviour
@@ -17,7 +17,7 @@ public class ApplyPowerUp : MonoBehaviour
         speedPowerUp = new SpeedPowerUp();
         jumpPowerUp = new JumpPowerUp();
 
-        if (speedPowerUp && jumpPowerUp != null)
+        if (speedPowerUp!= null && jumpPowerUp != null)
         {
             speedPowerUp.SpeedPowerUpEvent += BoostPlayerSpeed;
             jumpPowerUp.PowerJump += BoostPlayerJump;
@@ -26,7 +26,7 @@ public class ApplyPowerUp : MonoBehaviour
 
     void OnDestroy()
     {
-        if (speedPowerUp && jumpPowerUp != null)
+        if (speedPowerUp!= null && jumpPowerUp != null)
         {
             speedPowerUp.SpeedPowerUpEvent -= BoostPlayerSpeed;
             jumpPowerUp.PowerJump -= BoostPlayerJump;
