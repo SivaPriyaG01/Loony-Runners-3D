@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public float defaultJumpForce = 5f;
     private float playerSpeed;
     private float jumpForce;
+    private float maxPlayerSpeed = 40f;
+    private float maxJumpForce = 15f;
 
     public float DefaultSpeed
     {
@@ -30,13 +32,21 @@ public class PlayerMovement : MonoBehaviour
     public float PlayerSpeed
     {
         get => playerSpeed;
-        set => playerSpeed = value;
+        set
+        {
+            playerSpeed *= value;
+            playerSpeed = Mathf.Min(playerSpeed, maxPlayerSpeed);
+        }
     }
 
     public float JumpForce
     {
         get => jumpForce;
-        set => jumpForce = value;
+        set
+        {
+            jumpForce *= value;
+            jumpForce = Mathf.Min(jumpForce, maxJumpForce);
+        } 
     }
 
     void Start()
@@ -85,14 +95,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void SetPlayerSpeed(float speed)
+    public void SetPlayerSpeed(float speedMultiplier)
     {
-        PlayerSpeed = speed;
+        PlayerSpeed = speedMultiplier;
     }
 
-    public void SetPlayerJump(float jump)
+    public void SetPlayerJump(float jumpMultiplier)
     {
-        JumpForce = jump;
+        JumpForce = jumpMultiplier;
     }
     
 

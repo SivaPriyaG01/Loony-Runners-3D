@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ApplyPowerUp : MonoBehaviour
 {
-    CollisionDetector collisionDetector;
+    //CollisionDetector collisionDetector;
     // SpeedPowerUp speedPowerUp;
     // JumpPowerUp jumpPowerUp;
     PlayerMovement playerMovement;
@@ -27,7 +27,7 @@ public class ApplyPowerUp : MonoBehaviour
 
     void Awake()
     {
-        collisionDetector = GetComponent<CollisionDetector>();
+        //collisionDetector = GetComponent<CollisionDetector>();
         playerMovement = GetComponent<PlayerMovement>();
         // speedPowerUp = new SpeedPowerUp();
         // jumpPowerUp = new JumpPowerUp();
@@ -73,7 +73,8 @@ public class ApplyPowerUp : MonoBehaviour
         Debug.Log("Speed power Up applied");
         yield return new WaitForSecondsRealtime(time);
 
-         playerMovement.SetPlayerSpeed(playerMovement.defaultSpeed);
+        //  playerMovement.SetPlayerSpeed(playerMovement.defaultSpeed);
+        playerMovement.SetPlayerSpeed(1/value);
     }
 
     IEnumerator ApplyJumpPowerUp(float value, int time)
@@ -81,8 +82,9 @@ public class ApplyPowerUp : MonoBehaviour
         playerMovement.SetPlayerJump(value);
         Debug.Log("Jump power Up applied");
         yield return new WaitForSecondsRealtime(time);
-        
-        playerMovement.SetPlayerJump(playerMovement.defaultJumpForce);
+
+        //playerMovement.SetPlayerJump(playerMovement.defaultJumpForce);
+        playerMovement.SetPlayerJump(1 / value);
     }
 
 }
