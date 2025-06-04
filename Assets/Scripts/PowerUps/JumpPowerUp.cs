@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class JumpPowerUp : PowerUpBase
 {
-  public event Action<float, int> PowerJump;
+  public static event Action<float, int> PowerJump;
   private float newJumpValue;
   public float NewJumpValue
   {
