@@ -13,7 +13,7 @@ public class SpeedPowerUp : PowerUpBase
     set => speedMultiplier= value;
   }
 
-  private int speedPowerUpTime;
+  private int speedPowerUpTime=5;
 
   public int SpeedPowerUpTime
   {

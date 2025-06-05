@@ -15,7 +15,7 @@ public class JumpPowerUp : PowerUpBase
     }
   }
 
-  private int jumpPowerUpTime;
+  private int jumpPowerUpTime =5;
 
   public int JumpPowerUpTime
   {
