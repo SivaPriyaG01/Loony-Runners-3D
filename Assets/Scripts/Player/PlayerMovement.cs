@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float defaultSpeed = 10f;
     public float defaultJumpForce = 5f;
-    private float playerSpeed;
-    private float jumpForce;
+    private float playerSpeed = 1f;
+    private float jumpForce = 1f;
     private float maxPlayerSpeed = 40f;
     private float maxJumpForce = 15f;
 
