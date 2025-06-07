@@ -6,4 +6,9 @@ public class AbilitiesBase : MonoBehaviour
     //if banana peel and oil bomb: skid and fall
     //if shock wave fly away and fall
     //ghost mode: collisions turn off for few seconds
+    //
+    public void ApplyAbilityEffects()
+    {
+        
+    }
 }
