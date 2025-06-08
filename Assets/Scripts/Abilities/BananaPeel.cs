@@ -2,5 +2,6 @@ using UnityEngine;
 
 public class BananaPeel : AbilitiesBase
 {
-    [SerializeField] AnimationClip skidAndFall;
+    AnimationClip skidAndFall;
+    [SerializeField] float playerSlowDownMultiplier = 0.5f;
 }
