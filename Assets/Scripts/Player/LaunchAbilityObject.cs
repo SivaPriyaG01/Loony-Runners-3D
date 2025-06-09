@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class LaunchAbilityObject : MonoBehaviour
 {
-    public static event Action<GameObject> AssignAbility;
+    // public static event Action<GameObject> AssignAbility;
+    AbilityUITriggerManager amScript;
+    
     public static event Action StartRayCast;
     public static event Action ThrowAbilityObject;
 
@@ -17,16 +19,21 @@ public class LaunchAbilityObject : MonoBehaviour
     private float abilityObjectMass;
     private Vector3 forceDirection;
     private Vector3 forceToAdd;
+
+    void Awake()
+    {
+        amScript = GameObject.Find("AbilityUITrigger").GetComponent<AbilityUITriggerManager>();   
+    }
     void OnEnable()
     {
-        AssignAbility += AssignAbilityObject;
+        amScript.AssignAbility += AssignAbilityObject;
         StartRayCast += ProjectRayCast;
         ThrowAbilityObject += Throw;
 
     }
     void OnDisable()
     {
-        AssignAbility -= AssignAbilityObject;
+        amScript.AssignAbility -= AssignAbilityObject;
         StartRayCast -= ProjectRayCast;
         ThrowAbilityObject -= Throw;
     }
