@@ -6,10 +6,10 @@ using TMPro;
 using System;
 public class AbilityUITriggerManager : MonoBehaviour
 {
-    public static event Action<GameObject> AssignAbility;
-    [SerializeField] static GameObject bananaPeel;
+    public event Action<GameObject> AssignAbility;
+    [SerializeField] GameObject bananaPeel;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public static void OnBananaPeelClick()
+    public void OnBananaPeelClick()
     {
         AssignAbility.Invoke(bananaPeel);
         Debug.Log("AssignAbility invoked, banana peel added");
