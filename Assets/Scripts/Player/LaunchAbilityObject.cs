@@ -6,15 +6,15 @@ public class LaunchAbilityObject : MonoBehaviour
     // public static event Action<GameObject> AssignAbility;
     AbilityUITriggerManager amScript;
     
-    public static event Action StartRayCast;
+    //public static event Action StartRayCast;
     public static event Action ThrowAbilityObject;
 
     private GameObject abilityObject;
     private Transform attackPoint;
-    private Transform cam;
+    [SerializeField] private Transform cam;
     private float throwCoolDown = 2f;
-    private float throwForce;
-    private float throwUpwardForce;
+    private float throwForce=10f;
+    private float throwUpwardForce=10f;
     private bool readyToThrow=true;
     private float abilityObjectMass;
     private Vector3 forceDirection;
@@ -22,26 +22,27 @@ public class LaunchAbilityObject : MonoBehaviour
 
     void Awake()
     {
-        amScript = GameObject.Find("AbilityUITrigger").GetComponent<AbilityUITriggerManager>();   
+        amScript = GameObject.Find("AbilityUITrigger").GetComponent<AbilityUITriggerManager>();  
+    }
+
+    void Update()
+    {
+        attackPoint = gameObject.transform;
     }
     void OnEnable()
     {
         amScript.AssignAbility += AssignAbilityObject;
-        StartRayCast += ProjectRayCast;
+        amScript.StartRayCast += ProjectRayCast;
         ThrowAbilityObject += Throw;
 
     }
     void OnDisable()
     {
         amScript.AssignAbility -= AssignAbilityObject;
-        StartRayCast -= ProjectRayCast;
+        amScript.StartRayCast -= ProjectRayCast;
         ThrowAbilityObject -= Throw;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
 
     void AssignAbilityObject(GameObject gameObject)
     {
@@ -51,6 +52,19 @@ public class LaunchAbilityObject : MonoBehaviour
 
     void ProjectRayCast()
     {
+        Debug.Log("Projectraycast invoked");
+
+        if (cam == null)
+    {
+        Debug.LogError("Camera is not assigned!");
+        return;
+    }
+
+    if (attackPoint == null)
+    {
+        Debug.LogError("Attack Point is not assigned!");
+        return;
+    }
         forceDirection = cam.transform.forward;
         RaycastHit hit;
 
@@ -60,7 +74,9 @@ public class LaunchAbilityObject : MonoBehaviour
         }
 
         forceToAdd = forceDirection * throwForce + transform.up * throwUpwardForce;
-        Debug.DrawRay(attackPoint.position,forceToAdd);
+        Debug.DrawRay(attackPoint.position, forceToAdd.normalized*10f, Color.black,5f);
+        Debug.Log("Force to add: " + forceToAdd);
+
     }
 
     void Throw()
