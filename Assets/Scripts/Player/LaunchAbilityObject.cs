@@ -5,9 +5,10 @@ public class LaunchAbilityObject : MonoBehaviour
 {
     // public static event Action<GameObject> AssignAbility;
     AbilityUITriggerManager amScript;
+    PlayerMovement playerMovement;
     
     //public static event Action StartRayCast;
-    public static event Action ThrowAbilityObject;
+    // public static event Action ThrowAbilityObject;
 
     private GameObject abilityObject;
     private Transform attackPoint;
@@ -22,7 +23,8 @@ public class LaunchAbilityObject : MonoBehaviour
 
     void Awake()
     {
-        amScript = GameObject.Find("AbilityUITrigger").GetComponent<AbilityUITriggerManager>();  
+        amScript = GameObject.Find("AbilityUITrigger").GetComponent<AbilityUITriggerManager>();
+        playerMovement = GetComponent<PlayerMovement>();  
     }
 
     void Update()
@@ -32,15 +34,15 @@ public class LaunchAbilityObject : MonoBehaviour
     void OnEnable()
     {
         amScript.AssignAbility += AssignAbilityObject;
-        amScript.StartRayCast += ProjectRayCast;
-        ThrowAbilityObject += Throw;
+        amScript.StartRayCast += SetDirection;
+        playerMovement.ThrowAbilityObject += Throw;
 
     }
     void OnDisable()
     {
         amScript.AssignAbility -= AssignAbilityObject;
-        amScript.StartRayCast -= ProjectRayCast;
-        ThrowAbilityObject -= Throw;
+        amScript.StartRayCast -= SetDirection;
+        playerMovement.ThrowAbilityObject -= Throw;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -79,24 +81,41 @@ public class LaunchAbilityObject : MonoBehaviour
 
     }
 
+    void SetDirection()
+    {
+        Vector3 screenCentre = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
+        Vector3 worldCentre = Camera.main.ScreenToWorldPoint(screenCentre);
+        forceDirection = worldCentre;
+        forceToAdd = forceDirection * throwForce + transform.up * throwUpwardForce;
+        Debug.Log("Direction setting complete");
+    }
+
     void Throw()
     {
-        readyToThrow = false;
-        GameObject projectile = Instantiate(abilityObject, attackPoint.position, cam.rotation);
+        if (abilityObject != null)
+        {
+            readyToThrow = false;
+            GameObject projectile = Instantiate(abilityObject, attackPoint.position, cam.rotation);
 
-        // get rigidbody component
-        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+            // get rigidbody component
+            Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
 
-        // calculate direction
-       // Vector3 forceDirection = cam.transform.forward;
+            // calculate direction
+            // Vector3 forceDirection = cam.transform.forward;
 
-        // add force
-        //Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwUpwardForce;
+            // add force
+            //Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwUpwardForce;
 
-        projectileRb.AddForce(forceToAdd, ForceMode.Impulse);
+            projectileRb.AddForce(forceToAdd, ForceMode.Impulse);
 
-        // implement throwCooldown
-        Invoke(nameof(ResetThrow), throwCoolDown);
+            // implement throwCooldown
+            Invoke(nameof(ResetThrow), throwCoolDown);
+        }
+        else
+        {
+            Debug.Log("ABilityObject not assigned");
+        }
+       
     }
     
     private void ResetThrow()
