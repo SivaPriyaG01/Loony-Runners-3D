@@ -1,16 +1,20 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
     private PlayerInput playerInput;
+    public event Action ThrowAbilityObject;
     
 
     private float vertical;
     private float horizontal;
     private bool jump;
+    private bool fire;
 
     public float defaultSpeed = 10f;
     public float defaultJumpForce = 20f;
@@ -67,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         JumpPlayer();
+        FireAbility();
     }
 
     void ReadInput()
@@ -75,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
         vertical = moveInput.y;
         horizontal = moveInput.x;
         jump = playerInput.actions["Jump"].WasPressedThisFrame();
+        fire = playerInput.actions["Attack"].WasPressedThisFrame();
+
     }
 
     void MovePlayer()
@@ -92,6 +99,14 @@ public class PlayerMovement : MonoBehaviour
         if (jump && Mathf.Abs(rb.linearVelocity.y) < 0.01f) // prevent double jumps
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+    void FireAbility()
+    {
+        if (fire)
+        {
+            Debug.Log("Fire pressed");
+            ThrowAbilityObject?.Invoke();
         }
     }
 
