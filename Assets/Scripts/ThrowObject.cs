@@ -31,6 +31,7 @@ public class ThrowObject : MonoBehaviour
     void OnFireThrowObject()
     {
         Instantiate(objectToThrow, startPosition, objectToThrow.transform.rotation);
-        rb.AddRelativeForce(throwDirection * throwForce, ForceMode.Impulse);
+        //rb.AddRelativeForce(throwDirection * throwForce, ForceMode.Impulse);
+        rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
     }
 }
