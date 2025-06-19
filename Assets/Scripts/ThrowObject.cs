@@ -1,50 +1,47 @@
-using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ThrowObject : MonoBehaviour
 {
-    [SerializeField] GameObject objectToThrow;
-    PlayerInput playerInput;
-    [SerializeField] float throwForce = 10f;
-    [SerializeField] bool instantiated;
-    [SerializeField] bool fire;
+    [SerializeField] GameObject objectToThrowPrefab;
+    [SerializeField] float throwForce = 20f;
     [SerializeField] Vector3 startPosition;
-    [SerializeField] Vector3 throwDirection;
-    Rigidbody rb;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    Vector3 trajectoryDir;
+    
+    private GameObject spawnedObject;
+    private Rigidbody spawnedRb;
+    private PlayerInput playerInput;
+
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        rb = objectToThrow.GetComponent<Rigidbody>();
+
+        // Instantiate and store reference
+        spawnedObject = Instantiate(objectToThrowPrefab, startPosition, Quaternion.identity);
+
+        // Get and configure Rigidbody
+        spawnedRb = spawnedObject.GetComponent<Rigidbody>();
+        spawnedRb.useGravity = false;
+        spawnedRb.isKinematic = true;
+        trajectoryDir = new Vector3(spawnedRb.position.x, spawnedRb.position.y + 2, spawnedRb.position.z + 2);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        instantiated = playerInput.actions["Jump"].WasPressedThisFrame();
-        fire = playerInput.actions["Attack"].WasPressedThisFrame();
-
-        if (instantiated)
+        if (playerInput.actions["Attack"].WasPressedThisFrame())
         {
-            OnInstantiated();
-        }
-        if (fire)
-        {
-             OnFireThrowObject();
+            FireObject();
         }
     }
 
-    void OnInstantiated()
+    void FireObject()
     {
-        Instantiate(objectToThrow, startPosition, objectToThrow.transform.rotation);
-        //rb.AddRelativeForce(throwDirection * throwForce, ForceMode.Impulse);
+        if (spawnedRb == null) return;
 
-    }
+        Debug.Log("Attack pressed");
 
-    void OnFireThrowObject()
-    {
-        rb.isKinematic = false;
-        rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
+        spawnedRb.useGravity = true;
+        spawnedRb.isKinematic = false;
+        spawnedRb.AddForce(trajectoryDir * throwForce, ForceMode.Impulse);
     }
 }
