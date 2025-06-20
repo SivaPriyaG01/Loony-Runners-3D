@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class ThrowObject : MonoBehaviour
 {
     [SerializeField] GameObject objectToThrowPrefab;
-    [SerializeField] float throwForce = 20f;
+    [SerializeField] float throwForce = 2f;
     //[SerializeField] Vector3 startPosition;
     Vector3 trajectoryDir;
     
