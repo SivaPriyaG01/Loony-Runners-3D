@@ -5,7 +5,7 @@ public class ThrowObject : MonoBehaviour
 {
     [SerializeField] GameObject objectToThrowPrefab;
     [SerializeField] float throwForce = 20f;
-    [SerializeField] Vector3 startPosition;
+    //[SerializeField] Vector3 startPosition;
     Vector3 trajectoryDir;
     
     private GameObject spawnedObject;
@@ -17,7 +17,7 @@ public class ThrowObject : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
 
         // Instantiate and store reference
-        spawnedObject = Instantiate(objectToThrowPrefab, startPosition, Quaternion.identity);
+        spawnedObject = Instantiate(objectToThrowPrefab, transform.position, Quaternion.identity);
 
         // Get and configure Rigidbody
         spawnedRb = spawnedObject.GetComponent<Rigidbody>();
