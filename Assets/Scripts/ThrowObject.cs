@@ -17,6 +17,29 @@ public class ThrowObject : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
 
         // Instantiate and store reference
+        // spawnedObject = Instantiate(objectToThrowPrefab, transform.position, Quaternion.identity);
+
+        // // Get and configure Rigidbody
+        // spawnedRb = spawnedObject.GetComponent<Rigidbody>();
+        // spawnedRb.useGravity = false;
+        // spawnedRb.isKinematic = true;
+        // trajectoryDir = new Vector3(spawnedRb.position.x, spawnedRb.position.y + 2, spawnedRb.position.z + 2);
+    }
+
+    void Update()
+    {
+        if (playerInput.actions["Jump"].WasPressedThisFrame())
+        {
+            SpawnObject();
+        }
+        if (playerInput.actions["Attack"].WasPressedThisFrame())
+            {
+                FireObject();
+            }
+    }
+
+    void SpawnObject()
+    {
         spawnedObject = Instantiate(objectToThrowPrefab, transform.position, Quaternion.identity);
 
         // Get and configure Rigidbody
@@ -24,14 +47,6 @@ public class ThrowObject : MonoBehaviour
         spawnedRb.useGravity = false;
         spawnedRb.isKinematic = true;
         trajectoryDir = new Vector3(spawnedRb.position.x, spawnedRb.position.y + 2, spawnedRb.position.z + 2);
-    }
-
-    void Update()
-    {
-        if (playerInput.actions["Attack"].WasPressedThisFrame())
-        {
-            FireObject();
-        }
     }
 
     void FireObject()
@@ -43,5 +58,8 @@ public class ThrowObject : MonoBehaviour
         spawnedRb.useGravity = true;
         spawnedRb.isKinematic = false;
         spawnedRb.AddForce(trajectoryDir * throwForce, ForceMode.Impulse);
+
+
+        
     }
 }
